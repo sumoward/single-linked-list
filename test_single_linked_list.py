@@ -16,10 +16,10 @@ You must provide:
 
 """
 import unittest
-from lists import Single_Linked_List
+from single_linked_lists import Single_Linked_List
 
 
-class SLLTestCase(unittest.TestCase):
+class SLLTestCase(unittest.TestCase): 
 
     def setUp(self):
         self.sll = Single_Linked_List()
@@ -27,7 +27,7 @@ class SLLTestCase(unittest.TestCase):
         for x in range(1, 11):
             self.sll1.insert_end_of_list(x)
         self.sll2 = Single_Linked_List()
-        for x in range(1, 11):
+        for x in range(1, 11): # use xrange 
             self.sll2.insert_end_of_list(x)
         self.sll3 = Single_Linked_List()
         for x in range(11, 21):
@@ -92,7 +92,7 @@ class SLLTestCase(unittest.TestCase):
                 self.assertEqual(x, len(self.sll1))
             self.assertEqual(0, len(self.sll1))
             self.assertEqual(10, len(self.sll2))
-            self.assertEqual('[ 1 2 3 4 5 6 7 8 9 10 ]', self.sll2.__str__())
+            self.assertEqual('[ 1 2 3 4 5 6 7 8 9 10 ]', self.sll2.__str__()) # should i be checking the stuff in there rather than just the string
             self.sll2.remove_start_of_list()
             self.assertEqual('[ 2 3 4 5 6 7 8 9 10 ]', self.sll2.__str__())
             self.sll2.remove_start_of_list()

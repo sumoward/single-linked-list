@@ -17,9 +17,10 @@ You must provide:
 """
 
 
-class Single_Linked_List():
+class Single_Linked_List(object): # class inherits from object missed best practice
+                                # contigous memory if we had used an array
 
-    #private class for nodes of linked list
+    # private class for nodes of linked list
     class __SLLNode():
 
         def __init__(self, store, next_node):
@@ -29,18 +30,20 @@ class Single_Linked_List():
         def __str__(self):
             return str(self.store)
 
-#constructor
+# constructor
     def __init__(self):
         self.head = None
         self.tail = None
         # saves us iterating over the list each time we want length, O(1)
-        self.length = 0
+        self.length = 0 # however this could be a point of failure id other methods do not track this
 
-#returns the length of the list
+# returns the length of the list
     def __len__(self):
-        return self.length
+        return self.length # this feature was not requested should i have sublted less?
+    
+    # perhaps i should have written an __iterable__
 
-#__str__ over the list
+# __str__ over the list
     def __str__(self):
         node = self.head
         output = '['
@@ -54,32 +57,29 @@ class Single_Linked_List():
             node = node.next
         return (output + ' ]')
 
-#check whether the list is empty
+# check whether the list is empty
     def isEmpty(self):
         return self.length == 0
 
-#to add a new node after an existing node
-    def insert_node(self,  store, node):
+# to add a new node after an existing node
+    def insert_node(self,  store, node): # are variables clearly named
         new_node = Single_Linked_List.__SLLNode(store, node.next)
         node.next = new_node
         if self.tail == node:
             self.tail = new_node
         self.length = self.length + 1
-        #print('self.length  insert', self.length)
         return new_node
 
-#add a node at the start of the list
+# add a node at the start of the list
     def insert_start_of_list(self, store):
         new_node = Single_Linked_List.__SLLNode(store, self.head)
         self.head = new_node
         if self.tail is None:
             self.tail = new_node
-        #print('self.head', self.head)
         self.length = self.length + 1
-        #print('self.length start', self.length)
         return new_node
 
-#add a node at the end of the list
+# add a node at the end of the list
     def insert_end_of_list(self, store):
         if self.tail is None:
             new_node = Single_Linked_List.__SLLNode(store, None)
@@ -91,7 +91,7 @@ class Single_Linked_List():
             new_node = self.insert_node(store, self.tail)
         return new_node
 
-#remove a node that follows a particular node from the list
+# remove a node that follows a particular node from the list
     def remove_following_node(self, node):
         if node.next is None:
             self.tail = node
@@ -100,14 +100,14 @@ class Single_Linked_List():
         node.next = node.next.next
         self.length = self.length - 1
 
-#remove a node from the beginning of a list
+# remove a node from the beginning of a list
     def remove_start_of_list(self):
         self.head = self.head.next
         if self.head is None:
             self.tail = None
         self.length = self.length - 1
 
-#iterative solution to reversal of the list, it uses 3 'pointers'
+# iterative solution to reversal of the list, it uses 3 'pointers'
     def reverse_list_iterative(self):
         if self.head == 0 or self.tail == 0:
             return
@@ -116,30 +116,30 @@ class Single_Linked_List():
         pointerc = pointerb.next
         pointera.next = None
         pointerb.next = pointera
-        pointera = pointerb
-        while pointerc != None:
+        pointera = pointerb # no check that it isnt a single element
+        while pointerc is not None:
             pointerb = pointerc
             pointerc = pointerc.next
             pointerb.next = pointera
             pointera = pointerb
         self.head = pointerb
 
-#calls recursive solution to reversal of the list on the start of a list
+# calls recursive solution to reversal of the list on the start of a list
     def recursive_algo(self):
         self._recursive_algo(self.head)
 
-#recursive solution
+# recursive solution
     def _recursive_algo(self, node):
-        if node != None:
+        if node is not None:
             right = node.next
             if node != self.head:
                 node.next = self.head
                 self.head = node
             else:
                 node.next = None
-            self._recursive_algo(right)
+            self._recursive_algo(right) # tail recursion not python particular
 
-#find the node with a given value stored in it
+# find the node with a given value stored in it
     def find_value(self, value):
         node = self.head
         while node is not None:
